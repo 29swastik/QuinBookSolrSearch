@@ -6,8 +6,6 @@ import com.example.quinBooksolrSearch.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.PostConstruct;
-
 @RestController
 @RequestMapping(path = "/user")
 public class UserController {
