@@ -8,8 +8,11 @@ import com.example.quinBooksolrSearch.service.SearchService;
 import com.example.quinBooksolrSearch.solr_repository.UserSolrRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -48,4 +51,23 @@ public class SearchServiceImpl implements SearchService {
         return saveIntoSolr(userRequestDto);
 
     }
+
+    @Override
+    public List<UserResponseDto> getUsersListBasedOnString(String searchTerm) {
+
+        PageRequest pageable = PageRequest.of(0, 5);
+
+        List<UserResponseDto> userResponseDtoList = new ArrayList<>();
+        List<QuinBookUser> quinBookUserList = userSolrRepository.findByString(searchTerm, pageable);
+
+        for(QuinBookUser quinBookUser: quinBookUserList) {
+            UserResponseDto userResponseDto = new UserResponseDto();
+            BeanUtils.copyProperties(quinBookUser, userResponseDto);
+            userResponseDtoList.add(userResponseDto);
+        }
+
+        return userResponseDtoList;
+    }
+
+
 }

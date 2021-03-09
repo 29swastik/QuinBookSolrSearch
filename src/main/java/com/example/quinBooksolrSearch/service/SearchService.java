@@ -11,4 +11,6 @@ public interface SearchService {
     UserResponseDto saveIntoSolr(UserRequestDto userRequestDto);
 
     UserResponseDto addUser(UserRequestDto userRequestDto);
+
+    List<UserResponseDto> getUsersListBasedOnString(String searchTerm);
 }
