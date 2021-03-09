@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Entity
 @Data
 @SolrDocument(collection = "user")
-public class User {
+public class QuinBookUser {
 
     @Id
     @org.springframework.data.annotation.Id

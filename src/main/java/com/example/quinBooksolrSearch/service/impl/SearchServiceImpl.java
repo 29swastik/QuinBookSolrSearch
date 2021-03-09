@@ -1,7 +1,8 @@
 package com.example.quinBooksolrSearch.service.impl;
 
+import com.example.quinBooksolrSearch.dto.UserRequestDto;
 import com.example.quinBooksolrSearch.dto.UserResponseDto;
-import com.example.quinBooksolrSearch.entity.User;
+import com.example.quinBooksolrSearch.entity.QuinBookUser;
 import com.example.quinBooksolrSearch.repository.UserRepository;
 import com.example.quinBooksolrSearch.service.SearchService;
 import com.example.quinBooksolrSearch.solr_repository.UserSolrRepository;
@@ -21,17 +22,27 @@ public class SearchServiceImpl implements SearchService {
     @Override
     public UserResponseDto getUsersList(String userName) {
 
-        User user = userSolrRepository.findByName(userName);
+        QuinBookUser quinBookUser = userSolrRepository.findByName(userName);
         UserResponseDto userResponseDto = new UserResponseDto();
-        BeanUtils.copyProperties(user, userResponseDto);
+        BeanUtils.copyProperties(quinBookUser, userResponseDto);
 
         return userResponseDto;
     }
 
     @Override
-    public void saveIntoSolr() {
+    public UserResponseDto saveIntoSolr(UserRequestDto userRequestDto) {
+        QuinBookUser quinBookUser = new QuinBookUser();
+        BeanUtils.copyProperties(userRequestDto, quinBookUser);
+        QuinBookUser savedQuinBookUser = userRepository.save(quinBookUser);
+        QuinBookUser quinBookUser1 = userSolrRepository.save(savedQuinBookUser);
+        UserResponseDto userResponseDto = new UserResponseDto();
+        BeanUtils.copyProperties(quinBookUser1, userResponseDto);
+        return userResponseDto;
+    }
 
-        Iterable<User> userList = userRepository.findAll();
-        userSolrRepository.saveAll(userList);
+    @Override
+    public UserResponseDto addUser(UserRequestDto userRequestDto) {
+        return saveIntoSolr(userRequestDto);
+
     }
 }

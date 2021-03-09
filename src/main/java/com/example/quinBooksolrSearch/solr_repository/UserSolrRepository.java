@@ -1,9 +1,8 @@
 package com.example.quinBooksolrSearch.solr_repository;
 
-import com.example.quinBooksolrSearch.entity.User;
+import com.example.quinBooksolrSearch.entity.QuinBookUser;
 import org.springframework.data.solr.repository.SolrCrudRepository;
-import org.springframework.stereotype.Repository;
 
-public interface UserSolrRepository extends SolrCrudRepository<User, Long> {
-    User findByName(String searchTerm);
+public interface UserSolrRepository extends SolrCrudRepository<QuinBookUser, Long> {
+    QuinBookUser findByName(String searchTerm);
 }
