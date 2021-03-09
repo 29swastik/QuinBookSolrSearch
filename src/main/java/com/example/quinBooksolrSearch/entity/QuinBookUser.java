@@ -1,6 +1,7 @@
 package com.example.quinBooksolrSearch.entity;
 
 import lombok.Data;
+import org.apache.solr.client.solrj.beans.Field;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
@@ -12,7 +13,7 @@ import javax.persistence.Id;
 
 @Entity
 @Data
-@SolrDocument(collection = "user")
+@SolrDocument(solrCoreName = "quinbook")
 public class QuinBookUser {
 
     @Id

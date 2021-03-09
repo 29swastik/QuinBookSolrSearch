@@ -10,6 +10,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class SearchServiceImpl implements SearchService {
 
@@ -20,12 +22,13 @@ public class SearchServiceImpl implements SearchService {
     UserRepository userRepository;
 
     @Override
-    public UserResponseDto getUsersList(String userName) {
+    public UserResponseDto getUsersList(Long id) {
 
-        QuinBookUser quinBookUser = userSolrRepository.findByName(userName);
+        Optional<QuinBookUser> quinBookUser = userSolrRepository.findById(id);
         UserResponseDto userResponseDto = new UserResponseDto();
-        BeanUtils.copyProperties(quinBookUser, userResponseDto);
-
+        if(quinBookUser.isPresent()) {
+            BeanUtils.copyProperties(quinBookUser.get(), userResponseDto);
+        }
         return userResponseDto;
     }
 
@@ -34,7 +37,7 @@ public class SearchServiceImpl implements SearchService {
         QuinBookUser quinBookUser = new QuinBookUser();
         BeanUtils.copyProperties(userRequestDto, quinBookUser);
         QuinBookUser savedQuinBookUser = userRepository.save(quinBookUser);
-        QuinBookUser quinBookUser1 = userSolrRepository.save(savedQuinBookUser);
+        QuinBookUser quinBookUser1 = userSolrRepository.save(quinBookUser);
         UserResponseDto userResponseDto = new UserResponseDto();
         BeanUtils.copyProperties(quinBookUser1, userResponseDto);
         return userResponseDto;

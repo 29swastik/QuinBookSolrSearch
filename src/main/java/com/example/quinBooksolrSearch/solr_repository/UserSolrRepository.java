@@ -4,5 +4,5 @@ import com.example.quinBooksolrSearch.entity.QuinBookUser;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
 public interface UserSolrRepository extends SolrCrudRepository<QuinBookUser, Long> {
-    QuinBookUser findByName(String searchTerm);
+    QuinBookUser findByUserName(Long id);
 }

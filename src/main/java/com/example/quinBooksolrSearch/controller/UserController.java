@@ -13,9 +13,9 @@ public class UserController {
     @Autowired
     SearchService searchService;
 
-    @GetMapping("/getUser/{userName}")
-    public UserResponseDto getUsersList(@PathVariable String userName) {
-        return searchService.getUsersList(userName);
+    @GetMapping("/getUser/{id}")
+    public UserResponseDto getUsersList(@PathVariable("id") Long id) {
+        return searchService.getUsersList(id);
     }
 
     @PostMapping("/addUser")
