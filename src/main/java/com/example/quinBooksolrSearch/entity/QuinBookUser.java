@@ -6,10 +6,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.solr.core.mapping.Indexed;
 import org.springframework.data.solr.core.mapping.SolrDocument;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -21,12 +18,29 @@ public class QuinBookUser {
     @GenericGenerator(name = "user_id_seq", strategy = "increment")
     @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.AUTO)
 
-    @Indexed(name = "userId", type = "long")
-    private Long userId;
+    private long userId;
+
     @Indexed(name = "userName", type = "string")
     private String userName;
-    @Indexed(name = "email", type = "string")
-    private String email;
-    @Indexed(name = "location", type = "string")
-    private String location;
+
+    private String img;
+    private String relationshipStatus;
+    private String education10;
+    private String education12;
+    private String educationUni;
+
+    @Indexed(name = "jobProfile", type = "string")
+    private String jobProfile;
+
+    @Indexed(name = "companyName", type = "string")
+    private String companyName;
+
+    private java.sql.Date jobStartDate;
+    private java.sql.Date jobEndDate;
+    @Column(nullable = true)
+    private Long yearsOfExp;
+
+    @Indexed(name = "jobLocation", type = "string")
+    private String jobLocation;
+    private String address;
 }
