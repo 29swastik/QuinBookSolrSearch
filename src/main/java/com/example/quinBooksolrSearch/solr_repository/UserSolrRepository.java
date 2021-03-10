@@ -5,7 +5,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.solr.repository.Query;
 import org.springframework.data.solr.repository.SolrCrudRepository;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 public interface UserSolrRepository extends SolrCrudRepository<QuinBookUser, Long> {
