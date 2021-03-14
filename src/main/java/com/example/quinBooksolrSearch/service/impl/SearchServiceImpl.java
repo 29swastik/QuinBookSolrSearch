@@ -39,7 +39,23 @@ public class SearchServiceImpl implements SearchService {
     public UserResponseDto saveIntoSolr(UserRequestDto userRequestDto) {
         QuinBookUser quinBookUser = new QuinBookUser();
         BeanUtils.copyProperties(userRequestDto, quinBookUser);
-        QuinBookUser savedQuinBookUser = userRepository.save(quinBookUser);
+
+        Optional<QuinBookUser> quinBookUserOptional = userSolrRepository.findById(userRequestDto.getUserId());
+        if(quinBookUserOptional.isPresent()) {
+            userSolrRepository.deleteByUserId(userRequestDto.getUserId());
+        }
+
+        QuinBookUser quinBookUserFromDb = null;
+        quinBookUserFromDb = userRepository.getByUserName(userRequestDto.getUserName());
+        if(quinBookUserFromDb != null) {
+            long id = quinBookUserFromDb.getUserId();
+            BeanUtils.copyProperties(userRequestDto, quinBookUserFromDb);
+            quinBookUserFromDb.setUserId(id);
+            QuinBookUser savedQuinBookUser = userRepository.save(quinBookUserFromDb);
+        }
+        else {
+            userRepository.save(quinBookUser);
+        }
         QuinBookUser quinBookUser1 = userSolrRepository.save(quinBookUser);
         UserResponseDto userResponseDto = new UserResponseDto();
         BeanUtils.copyProperties(quinBookUser1, userResponseDto);
@@ -54,7 +70,6 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     public List<UserResponseDto> getUsersListBasedOnString(String searchTerm) {
-
         PageRequest pageable = PageRequest.of(0, 5);
 
         List<UserResponseDto> userResponseDtoList = new ArrayList<>();
@@ -63,6 +78,7 @@ public class SearchServiceImpl implements SearchService {
         for(QuinBookUser quinBookUser: quinBookUserList) {
             UserResponseDto userResponseDto = new UserResponseDto();
             BeanUtils.copyProperties(quinBookUser, userResponseDto);
+            userResponseDto.setFullName(userResponseDto.getFirstName() + " " + userResponseDto.getLastName());
             userResponseDtoList.add(userResponseDto);
         }
 

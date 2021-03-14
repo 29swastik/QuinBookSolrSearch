@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping(path = "/user")
 public class UserController {
@@ -19,6 +20,7 @@ public class UserController {
     public UserResponseDto getUsersList(@PathVariable("id") Long id) {
         return searchService.getUsersList(id);
     }
+
 
     @GetMapping("/getUserName/{searchTerm}")
     public List<UserResponseDto> getUsersListBasedOnString(@PathVariable("searchTerm") String searchTerm) {

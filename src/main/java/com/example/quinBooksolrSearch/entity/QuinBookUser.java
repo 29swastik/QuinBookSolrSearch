@@ -15,14 +15,20 @@ public class QuinBookUser {
 
     @Id
     @org.springframework.data.annotation.Id
-    @GenericGenerator(name = "user_id_seq", strategy = "increment")
-    @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.AUTO)
 
+    @Indexed(name = "userId", type = "long")
     private long userId;
 
     @Indexed(name = "userName", type = "string")
     private String userName;
 
+    @Indexed(name = "firstName", type = "string")
+    private String firstName;
+
+    @Indexed(name = "lastName", type = "string")
+    private String lastName;
+
+    @Column(columnDefinition = "TEXT")
     private String img;
     private String relationshipStatus;
     private String education10;
@@ -35,6 +41,9 @@ public class QuinBookUser {
     @Indexed(name = "companyName", type = "string")
     private String companyName;
 
+    private String Hobbies;
+    private java.sql.Date marriageAnniversary;
+    private java.sql.Date quinbookJoinDate;
     private java.sql.Date jobStartDate;
     private java.sql.Date jobEndDate;
     @Column(nullable = true)
@@ -43,4 +52,5 @@ public class QuinBookUser {
     @Indexed(name = "jobLocation", type = "string")
     private String jobLocation;
     private String address;
+
 }

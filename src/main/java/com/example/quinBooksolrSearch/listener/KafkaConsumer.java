@@ -16,7 +16,7 @@ public class KafkaConsumer {
     @Autowired
     SearchService searchService;
 
-    @KafkaListener(topics = "my-events", groupId = "group_id")
+    @KafkaListener(topics = "search", groupId = "group_id")
     public void consume(String message) {
         System.out.println("Consumed message: " + message);
         ObjectMapper objectMapper = new ObjectMapper();

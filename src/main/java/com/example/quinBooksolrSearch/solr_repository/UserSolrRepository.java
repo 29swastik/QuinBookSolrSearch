@@ -8,9 +8,13 @@ import org.springframework.data.solr.repository.SolrCrudRepository;
 import java.util.List;
 
 public interface UserSolrRepository extends SolrCrudRepository<QuinBookUser, Long> {
-    QuinBookUser findByUserName(Long id);
 
     @Query("userName:*?0*")
     List<QuinBookUser> findByString(String searchTerm, PageRequest pageable);
+
+    @Query("userName:?0")
+    QuinBookUser findUserName(String userName);
+
+    void deleteByUserId(long userId);
 }
 
