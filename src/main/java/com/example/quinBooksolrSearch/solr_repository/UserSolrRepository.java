@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserSolrRepository extends SolrCrudRepository<QuinBookUser, Long> {
 
-    @Query("userName:*?0*")
+    @Query("userName:*?0* OR firstName:*?0* OR lastName:*?0* OR jobProfile:*?0* OR companyName:*?0* OR jobLocation:*?0*")
     List<QuinBookUser> findByString(String searchTerm, PageRequest pageable);
 
     @Query("userName:?0")
