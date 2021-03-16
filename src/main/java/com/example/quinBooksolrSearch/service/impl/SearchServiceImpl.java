@@ -45,18 +45,15 @@ public class SearchServiceImpl implements SearchService {
             userSolrRepository.deleteByUserId(userRequestDto.getUserId());
         }
 
-        QuinBookUser quinBookUserFromDb = null;
-        quinBookUserFromDb = userRepository.getByUserName(userRequestDto.getUserName());
-        if(quinBookUserFromDb != null) {
-            long id = quinBookUserFromDb.getUserId();
-            BeanUtils.copyProperties(userRequestDto, quinBookUserFromDb);
-            quinBookUserFromDb.setUserId(id);
-            QuinBookUser savedQuinBookUser = userRepository.save(quinBookUserFromDb);
-        }
-        else {
-            userRepository.save(quinBookUser);
-        }
         QuinBookUser quinBookUser1 = userSolrRepository.save(quinBookUser);
+
+        Optional<QuinBookUser> optionalQuinBookUser = userRepository.findById(userRequestDto.getUserId());
+        if(optionalQuinBookUser.isPresent()) {
+            userRepository.deleteById(userRequestDto.getUserId());
+        }
+
+        userRepository.save(quinBookUser);
+
         UserResponseDto userResponseDto = new UserResponseDto();
         BeanUtils.copyProperties(quinBookUser1, userResponseDto);
         return userResponseDto;
