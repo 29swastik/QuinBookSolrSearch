@@ -15,6 +15,6 @@ public interface UserSolrRepository extends SolrCrudRepository<QuinBookUser, Lon
     @Query("userName:?0")
     QuinBookUser findUserName(String userName);
 
-    void deleteByUserId(long userId);
+    int deleteByUserId(long userId);
 }
 
